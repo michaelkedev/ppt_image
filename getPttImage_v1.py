@@ -27,13 +27,14 @@ timeCount=0
 while beautyUrlCount<=3495:
     try:
         session = HTMLSession()
-        beautyTitleUrl = "https://www.ptt.cc/bbs/Beauty/index"+str(beautyUrlCount)+".html"
+        # beautyTitleUrl = "https://www.ptt.cc/bbs/Beauty/index"+str(beautyUrlCount)+".html"
+        beautyTitleUrl = "https://www.ptt.cc/bbs/Beauty/index4004.html"
         r = session.get(beautyTitleUrl, cookies = {'over18': '1'})
         getTitle = r.html.find(".title")
         # print(temp)
         print(f"Curren Beauty Url Count {beautyUrlCount}")
         for i in getTitle:
-            print(i.text)
+            # print(i.text)
             if "正妹" in i.text:
                 if "肉特" in i.text:
                     break
@@ -43,11 +44,11 @@ while beautyUrlCount<=3495:
                     print(articleList[0])
 
                     #Get image
-                    r1 = session.get(articleList[0], cookies = {'over18': '1'})
+                    r1 = session.get(articleList[1], cookies = {'over18': '1'})
                     getContent = r1.html.find("#main-content")
-                    for i in getContent:
-                        getImageUrl= i.find('a')
-                        #最後一個網址是該文章的網址，所以要過濾掉
+                    for c in getContent:
+                        getImageUrl= c.find('a')
+                        #過濾掉最後一個網址
                         imgCount, endCount= 0, len(getImageUrl)-1
                         timeCount=0
                         for image in getImageUrl:
@@ -71,4 +72,3 @@ while beautyUrlCount<=3495:
         print(f"Get Error {e}, Current beautyUrlCount {beautyUrlCount}")
         timeCount+=5
         
-    
